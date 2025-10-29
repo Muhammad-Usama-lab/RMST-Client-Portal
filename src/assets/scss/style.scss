@@ -1,0 +1,108 @@
+/**======================================================================
+=========================================================================
+Template Name: DashboardKit - Most Complete Bootstrap Admin Template
+Author: DashboardKit
+Support: dashboardkit@gmail.com
+File: style.css
+=========================================================================
+=================================================================================== */
+// vendor css font
+
+// theme font
+@import '../fonts/feather';
+@import '../fonts/fontawesome';
+@import '../fonts/material';
+@import '../fonts/cryptofont';
+
+// main framework
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/variables-dark';
+
+@import 'settings/color-variables';
+@import 'settings/theme-variables';
+@import 'settings/bootstrap-variables';
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'react-modules/_tooltip';
+@import 'react-modules/_popover';
+@import 'react-modules/_carousel';
+
+// main framework
+@import 'themes/generic';
+@import 'themes/general';
+
+// Layouts
+@import 'themes/layouts/pc-sidebar';
+@import 'themes/layouts/pc-header';
+@import 'themes/layouts/pc-common';
+
+// Components
+@import 'themes/components/avatar';
+@import 'themes/components/badge';
+@import 'themes/components/button';
+@import 'themes/components/dropdown';
+@import 'themes/components/card';
+@import 'themes/components/progress';
+@import 'themes/components/table';
+@import 'themes/components/tabs';
+@import 'themes/components/form';
+
+// pages
+
+@import 'pages/dashboard';
+@import 'pages/icon-lauouts';
+@import 'pages/authentication';
+
+// custom plugins
+
+@import 'simplebar-react/dist/simplebar.min.css';
+@import 'themes/plugins/simplebar-scrollbar';
+
+// Customizer CSS
+@import 'customizer';
+
+@import 'react-common.scss';
+
+.bg-custom-purple {
+  background-color: $custom-purple !important;
+}
+
+.text-custom-purple {
+  color: $custom-purple !important;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+}
+
+.table-scroll-container {
+  max-height: 300px; /* Adjust as needed */
+  overflow-y: auto;
+  border: 1px solid #e0e0e0; /* Optional: Add a border to the container */
+  position: relative; /* Needed for sticky positioning of children */
+
+  table {
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: #f8f9fa; /* Ensure header background is opaque */
+      z-index: 1; /* Ensure header stays above scrolling content */
+    }
+  }
+}
+
+.h-80 {
+  height: 80% !important;
+}
