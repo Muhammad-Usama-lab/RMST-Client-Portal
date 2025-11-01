@@ -11,6 +11,8 @@ import FlatCard from 'components/Widgets/Statistic/FlatCard';
 import { useNavigate } from 'react-router-dom';
 import { getLivelinessLogs, getUsageStats } from 'services/company';
 import { useLoading } from '../../../contexts/LoadingContext';
+import { formatNumberWithCommas } from '../../../utils/number';
+import { formatDateTime } from '../../../utils/date';
 
 // -----------------------|| DASHBOARD SALES ||-----------------------//
 export default function DashSales() {
@@ -26,12 +28,8 @@ export default function DashSales() {
 
         setUsageStats({ ...stats, livelinessStats });
       } catch (error) {
-        if (error.code === 401) {
-          localStorage.clear();
-          navigate('/login');
-        }
         console.error('Error fetching usage stats:', error);
-      }finally{
+      } finally {
         hideLoadingOverlay();
       }
     };
@@ -39,18 +37,19 @@ export default function DashSales() {
     fetchUsageStats();
   }, []);
 
+
   const feedData = {
     options:
       usageStats?.livelinessStats?.last10Logs?.map((row) => ({
         icon: row?.livelinessDetected ? 'check' : 'x',
         bgclass: 'light-primary',
         heading: `${row?.nicNumber}`,
-        publishon: `${row?.createdAt}`
+        publishon: formatDateTime(row?.createdAt)
       })) || []
   };
 
   const getSuccessPercentage = () =>
-    `${(Math.round((usageStats?.livelinessStats?.totalCount / usageStats?.livelinessStats?.successCount) * 100))}%`;
+    `${Math.round((usageStats?.livelinessStats?.successCount / usageStats?.livelinessStats?.totalCount) * 100)}%`;
 
   return (
     <Row>
@@ -60,14 +59,14 @@ export default function DashSales() {
             <Card.Body className="col-sm-6 br">
               <FlatCard
                 params={{
-                  title: 'This Month',
+                  title: 'Total Calls This Month',
                   iconClass: 'text-primary mb-1',
                   icon: 'timeline',
-                  value: usageStats?.thisMonth?.totalCalls || 0
+                  value: formatNumberWithCommas(usageStats?.thisMonth?.totalCalls)
                 }}
               />
             </Card.Body>
-            <Card.Body className="col-sm-6 d-none d-md-table-cell d-lg-table-cell d-xl-table-cell card-body br">
+            {/* <Card.Body className="col-sm-6 d-none d-md-table-cell d-lg-table-cell d-xl-table-cell card-body br">
               <FlatCard
                 params={{
                   title: 'Cost This Month',
@@ -76,9 +75,9 @@ export default function DashSales() {
                   value: usageStats?.thisMonth?.totalCost || 0
                 }}
               />
-            </Card.Body>
+            </Card.Body> */}
             <Card.Body className="col-sm-6 card-bod">
-              <FlatCard params={{ title: 'Success Rate', iconClass: 'text-primary mb-1', icon: 'unarchive', value: '600' }} />
+              <FlatCard params={{ title: 'Liveliness Success Rate', iconClass: 'text-primary mb-1', icon: 'unarchive', value: '600' }} />
             </Card.Body>
           </div>
         </Card>
@@ -94,9 +93,10 @@ export default function DashSales() {
               {usageStats?.pastThreeMonths.map((month) => (
                 <Col key={month.month}>
                   <h3 className="m-0">
-                    {month.totalCalls}{' '}
+                    {formatNumberWithCommas(month.totalCalls)}
                     <p className="text-primary" style={{ fontSize: 12 }}>
-                      (PKR {month.totalCost})
+                      Calls
+                      {/* (PKR {month.totalCost}) */}
                     </p>
                   </h3>
                   <h6>{month.month}</h6>
@@ -116,7 +116,7 @@ export default function DashSales() {
                 {usageStats && (
                   <Chart
                     type="pie"
-                    height={285   }
+                    height={285}
                     series={Object.entries(usageStats?.thisMonthServiceCalls)?.map((v) => v?.[1])}
                     options={{
                       chart: {

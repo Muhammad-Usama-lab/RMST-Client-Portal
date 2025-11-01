@@ -3,6 +3,9 @@ import { Row, Col, Table, Form, Button, Card } from 'react-bootstrap';
 import MainCard from '../../components/Card/MainCard';
 import axiosInstance from '../../utils/axios';
 import { useLoading } from '../../contexts/LoadingContext';
+import { formatNumberWithCommas } from '../../utils/number';
+import { CSVLink } from 'react-csv';
+import { formatDate } from '../../utils/date';
 
 const ServiceReports = () => {
   const [startDate, setStartDate] = useState(null);
@@ -36,7 +39,7 @@ const ServiceReports = () => {
     };
 
     fetchUsageData();
-  }, [triggerFetch,]);
+  }, [triggerFetch]);
 
   const handleStartDateChange = (e) => {
     const newStartDate = e.target.value;
@@ -90,6 +93,21 @@ const ServiceReports = () => {
     return { dynamicHeaders: headers, tableData: processedTableData, cardData: aggregatedCardData };
   }, [apiData]);
 
+  const csvData = useMemo(() => {
+    if (!tableData.length) return [];
+
+    const headers = dynamicHeaders;
+    const data = tableData.map((row) => {
+      const rowData = [formatDate(row.date), row.totalCalls];
+      dynamicHeaders.slice(2).forEach((header) => {
+        rowData.push(row[header]);
+      });
+      return rowData;
+    });
+
+    return [headers, ...data];
+  }, [tableData, dynamicHeaders]);
+
   return (
     <Row>
       <Col>
@@ -121,8 +139,13 @@ const ServiceReports = () => {
               </Col> */}
               <Col md={4} className="d-flex align-items-end">
                 <Button variant="primary" type="submit" disabled={loading}>
-                  Submit
+                  Search
                 </Button>
+                {tableData.length > 0 && (
+                  <CSVLink data={csvData} filename={"service-reports.csv"} className="btn btn-outline-primary ms-2">
+                    Download CSV
+                  </CSVLink>
+                )}
               </Col>
             </Row>
           </Form>
@@ -139,8 +162,13 @@ const ServiceReports = () => {
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
                         <h6 className={`mb-2 ${index % 2 === 0 ? '' : 'text-white'}`}>{serviceName.toUpperCase()}</h6>
-                        <h3 className={`mb-0 ${index % 2 === 0 ? '' : 'text-white'}`}>{data.totalCount}</h3>
-                        <h5 className={`mb-0 ${index % 2 === 0 ? '' : 'text-white'}`}>PKR {data.totalCost.toFixed(2)}</h5>
+                        <h3 className={`mb-0 ${index % 2 === 0 ? '' : 'text-white'}`}>
+                          {formatNumberWithCommas(data?.totalCount)}
+                        </h3>
+                          <span className={`text-primary ${index % 2 === 0 ? '' : 'text-white'}`} style={{ fontSize: 12 }}>
+                            Calls
+                          </span>
+                        {/* <h5 className={`mb-0 ${index % 2 === 0 ? '' : 'text-white'}`}>PKR {data.totalCost.toFixed(2)}</h5> */}
                       </div>
                       <i className={`material-icons-two-tone f-30 ${index % 2 === 0 ? '' : 'text-white'}`}>library_add_check</i>
                     </div>
@@ -165,8 +193,8 @@ const ServiceReports = () => {
               <tbody>
                 {tableData.map((row, index) => (
                   <tr key={index}>
-                    <td>{row.date}</td>
-                    <td>{row.totalCalls}</td>
+                    <td>{formatDate(row.date)}</td>
+                    <td>{formatNumberWithCommas(row.totalCalls)}</td>
                     {dynamicHeaders.slice(2).map((header) => (
                       <td key={header}>{row[header]}</td>
                     ))}

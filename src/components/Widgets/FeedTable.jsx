@@ -16,9 +16,8 @@ export default function FeedCard({ wrapclass, title, height, options, successRat
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
             <Card.Title as="h5">{title}</Card.Title>
-            <span className="text-primary">Succes Ratio ({successRate})</span>
           </div>
-          <Link to="/reports/service-reports" className="text-primary">
+          <Link to="/reports/logs" className="text-primary">
             View All
           </Link>
         </div>
@@ -32,9 +31,9 @@ export default function FeedCard({ wrapclass, title, height, options, successRat
               </Col>
               <Col>
                 {/* <Link> */}
-                  <h6 className="m-b-5">
-                    {x.heading} <span className="text-muted float-end f-14">{x.publishon}</span>
-                  </h6>
+                <h6 className="m-b-5">
+                  {x.heading} <span className="text-muted float-end f-14">{x.publishon}</span>
+                </h6>
                 {/* </Link> */}
               </Col>
             </Row>

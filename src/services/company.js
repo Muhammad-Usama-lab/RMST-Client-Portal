@@ -19,3 +19,12 @@ export const getLivelinessLogs = async () => {
   });
   return response.data;
 };
+
+export const getActiveServices = async () => {
+  const response = await axios.get('/company/getActiveServices', {
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
+  });
+  return response.data;
+}

@@ -25,11 +25,11 @@ const menuItems = {
         },
         {
           id: 'liveliness-logs',
-          title: 'Liveliness Logs',
+          title: 'Service Calls',
           type: 'item',
           icon: 'material-icons-two-tone',
           iconname: 'receipt_long',
-          url: '/reports/liveliness-logs'
+          url: '/reports/logs'
         }
       ]
     },

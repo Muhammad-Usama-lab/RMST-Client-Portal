@@ -9,7 +9,7 @@ import { ConfigContext } from 'contexts/ConfigContext';
 import * as actionType from 'store/actions';
 
 // assets
-import logo from 'assets/images/logo.svg';
+import goDigital from 'assets/images/goDigital.png';
 
 // -----------------------|| MOBILE HEADER ||-----------------------//
 
@@ -30,7 +30,7 @@ export default function MobileHeader() {
     <div className="pc-mob-header pc-header">
       <div className="pcm-logo">
         {/* <img src={logo} alt="" className="logo logo-lg" /> */}
-        <h3 className="text-primary mt-2">RMST Portal</h3>
+        <img src={goDigital} alt="RMST Portal" className="logo-img" style={{width: '150px'}} />
       </div>
       <div className="pcm-toolbar">
         <Link to="#" className="pc-head-link" id="mobile-collapse" onClick={navToggleHandler}>

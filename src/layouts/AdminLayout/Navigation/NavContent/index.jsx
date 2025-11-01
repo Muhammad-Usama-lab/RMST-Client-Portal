@@ -13,7 +13,7 @@ import { ConfigContext } from 'contexts/ConfigContext';
 import SimpleBar from 'simplebar-react';
 
 // assets
-import logo from 'assets/images/logo.svg';
+import goDigital from 'assets/images/goDigital.png';
 
 // -----------------------|| NAV CONTENT ||-----------------------//
 
@@ -62,7 +62,7 @@ export default function NavContent({ navigation, activeNav }) {
   const mHeader = (
     <div className="m-header">
       <Link to="/dashboard" className="b-brand">
-        <h3 className="text-primary">RMST Portal</h3>
+        <img src={goDigital} alt="Go Digital" className="logo-img" style={{width: '150px'}} />
       </Link>
     </div>
   );

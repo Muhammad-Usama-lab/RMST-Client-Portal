@@ -49,7 +49,7 @@ const MainRoutes = {
               element: <ServiceReports />
             },
             {
-              path: '/reports/liveliness-logs',
+              path: '/reports/logs',
               element: <LivelinessLogs />
             }
           ]
