@@ -14,7 +14,8 @@ export const formatDateTime = (dateString) => {
 };
 
 export const formatDate = (dateString) => {
-  const date = new Date(dateString);
+  const parts = dateString.split('-');
+  const date = new Date(parts[2], parts[1] - 1, parts[0]);
   const day = String(date.getDate()).padStart(2, '0');
   const month = date.toLocaleString('default', { month: 'short' });
   const year = date.getFullYear();

@@ -76,9 +76,9 @@ export default function DashSales() {
                 }}
               />
             </Card.Body> */}
-            <Card.Body className="col-sm-6 card-bod">
+            {/* <Card.Body className="col-sm-6 card-bod">
               <FlatCard params={{ title: 'Liveliness Success Rate', iconClass: 'text-primary mb-1', icon: 'unarchive', value: '600' }} />
-            </Card.Body>
+            </Card.Body> */}
           </div>
         </Card>
 
