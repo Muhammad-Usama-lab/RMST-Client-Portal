@@ -6,8 +6,12 @@ import axiosInstance from '../../utils/axios';
 import { useLoading } from '../../contexts/LoadingContext';
 import { CSVLink } from 'react-csv';
 import { formatDateTime } from '../../utils/date';
+import dayjs from 'dayjs';
+import utc from "dayjs/plugin/utc";
+
 
 const LivelinessLogs = () => {
+  dayjs.extend(utc);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [apiData, setApiData] = useState(null);
@@ -242,7 +246,7 @@ const LivelinessLogs = () => {
             {apiData &&
               apiData.map((log, index) => (
                 <tr key={log._id || index}>
-                  <td>{formatDateTime(log.createdAt)}</td>
+                  <td>{dayjs(log.createdAt).utc().format("DD-MMM-YYYY hh:mm a")}</td>
                   <td>{log.nicNumber}</td>
                   <td>
                     {selectedService === 'liveliness'
